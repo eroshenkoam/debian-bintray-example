@@ -38,6 +38,6 @@ build.dependsOn buildDebian
 bintray {
     filesSpec {
         from "$project.buildDir/distributions"
-        into 'debian'
+        into '../'
     }
 }
