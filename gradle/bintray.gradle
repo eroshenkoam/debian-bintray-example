@@ -1,0 +1,31 @@
+apply plugin: 'com.jfrog.bintray'
+
+bintray {
+    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+    key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+
+    configurations = ['archives']
+
+    publish = true
+    pkg {
+        userOrg = 'qameta'
+        repo = 'debian'
+        name = 'debian-bintray-example'
+        desc = 'Debian Bintray Example'
+        websiteUrl = 'https://github.com/eroshenkoam/debian-bintray-example'
+        issueTrackerUrl = 'https://github.com/eroshenkoam/debian-bintray-example'
+        vcsUrl = 'https://github.com/eroshenkoam/debian-bintray-example.git'
+        licenses = ['Apache-2.0']
+
+        githubRepo = 'eroshenkoam/debian-bintray-example'
+        githubReleaseNotesFile = 'README.md'
+
+        version {
+            name = project.version
+            released = new Date()
+            gpg {
+                sign = true
+            }
+        }
+    }
+}

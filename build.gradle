@@ -1,0 +1,43 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven { url 'https://plugins.gradle.org/m2/' }
+    }
+
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+        classpath 'com.netflix.nebula:gradle-ospackage-plugin:4.4.0'
+        classpath 'net.researchgate:gradle-release:2.6.0'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: "nebula.ospackage"
+apply from: "$project.projectDir/gradle/release.gradle"
+apply from: "$project.projectDir/gradle/bintray.gradle"
+
+group 'io.eroshenkoam'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+task buildDebian(type: Deb) {
+    packageName = 'hello'
+
+    version = project.version
+    packager = 'Artem Eroshenko'
+    maintainer = 'Artem Eroshenko'
+
+    requires('openjdk-8-jre-headless')
+}
+
+build.dependsOn buildDebian
+
+bintray {
+    filesSpec {
+        from "$project.buildDir/distributions"
+        into '/'
+    }
+}
