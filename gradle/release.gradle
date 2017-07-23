@@ -4,4 +4,4 @@ release {
     tagTemplate = '${version}'
 }
 
-afterReleaseBuild.dependsOn bintrayUpload
+afterReleaseBuild.dependsOn 'bintrayUpload'
